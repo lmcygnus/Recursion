@@ -1,20 +1,17 @@
-const array = [0, 1];
-
-function fibs(n) {
+function fibs(n, array = [0, 1]) {
   const count = n;
   if (count < 0) return 'OOPS';
   if (count === 0) return 0;
-  // eslint-disable-next-line no-plusplus
-  for (let i = 2; i <= count; i++) {
+  for (let i = 2; i < count; i += 1) {
     array.push(array[i - 1] + array[i - 2]);
   }
   return array;
 }
-fibs(6);
+console.log(fibs(5)); // [ 0, 1, 1, 2, 3 ]
 
-function fibsReC(n) {
-  if (n < 2) return n;
-  array[n] = fibsReC(n - 1) + fibsReC(n - 2);
-  return array[n];
+function fibsReC(n, array = [0, 1]) {
+  if (array.length === n) return array;
+  array.push(array[array.length - 1] + array[array.length - 2]);
+  return fibsReC(n, array);
 }
-fibsReC(6);
+console.log(fibsReC(5)); // [ 0, 1, 1, 2, 3 ]
