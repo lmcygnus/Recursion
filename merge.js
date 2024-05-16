@@ -1,27 +1,38 @@
-/* eslint-disable no-plusplus */
-function mergeSort(arr) {
-  if (arr.length <= 1) {
-    return arr;
-  }
-
-  const mid = Math.floor(arr.length / 2);
-  const left = mergeSort(arr.slice(0, mid));
-  const right = mergeSort(arr.slice(mid));
-
+function merge(firstArray, secondArray) {
+  let firstArrayIndex = 0;
+  let secondArrayIndex = 0;
   const result = [];
-  let leftIndex = 0;
-  let rightIndex = 0;
-
-  while (leftIndex < left.length && rightIndex < right.length) {
-    if (left[leftIndex] < right[rightIndex]) {
-      result.push(left[leftIndex]);
-      leftIndex++;
+  let resultIndex = 0;
+  while (firstArrayIndex < firstArray.length && secondArrayIndex < secondArray.length) {
+    if (firstArray[firstArrayIndex] < secondArray[secondArrayIndex]) {
+      result[resultIndex] = firstArray[firstArrayIndex];
+      firstArrayIndex += 1;
+      resultIndex += 1;
     } else {
-      result.push(right[rightIndex]);
-      rightIndex++;
+      result[resultIndex] = secondArray[secondArrayIndex];
+      secondArrayIndex += 1;
+      resultIndex += 1;
     }
   }
-
-  return result.concat(left.slice(leftIndex)).concat(right.slice(rightIndex));
+  for (; firstArrayIndex < firstArray.length; firstArrayIndex += 1) {
+    result[resultIndex] = firstArray[firstArrayIndex];
+    resultIndex += 1;
+  }
+  for (; secondArrayIndex < secondArray.length; secondArrayIndex += 1) {
+    result[resultIndex] = secondArray[secondArrayIndex];
+    resultIndex += 1;
+  }
+  return result;
 }
-mergeSort([3, 2, 1, 13, 8, 5, 0, 1]);
+
+console.log(merge([3, 4, 5, 6], [1, 2]));
+
+function mergeSort(array) {
+  if (array.length <= 1) return array;
+  const mid = Math.floor(array.length / 2);
+  const left = mergeSort(array.slice(0, mid));
+  const right = mergeSort(array.slice(mid));
+  return merge(left, right);
+}
+
+console.log(mergeSort([105, 79, 100, 110]));
